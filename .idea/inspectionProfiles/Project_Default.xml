@@ -1,0 +1,25 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyPep8Inspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="ignoredErrors">
+        <list>
+          <option value="E261" />
+          <option value="E231" />
+          <option value="E401" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyUnreachableCodeInspection" enabled="true" level="INFORMATION" enabled_by_default="true">
+      <scope name="Project Files" level="INFORMATION" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="false" level="WARNING" enabled_by_default="false">
+      <scope name="Project Files" level="WARNING" enabled="false" />
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="numpy" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
