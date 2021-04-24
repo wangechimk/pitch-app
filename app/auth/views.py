@@ -12,7 +12,7 @@ def login():
 
 
 @auth.route('/signup', methods=['POST', 'GET'])
-def register():
+def signup():
     form = RegForm()
     if form.validate_on_submit():
         user = User(email=form.email.data, username=form.username.data, password=form.password.data)
