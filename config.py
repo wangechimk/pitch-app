@@ -1,4 +1,5 @@
 class Config:
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://moringa:wangechimk@localhost/pitches'
 
     @staticmethod
     def init_app(app):
