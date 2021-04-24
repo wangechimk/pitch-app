@@ -1,14 +1,21 @@
-from flask import render_template, url_for, redirect
+from flask import render_template, url_for, redirect, request
 from . import auth
 from flask_login import login_user, login_required, logout_user
-from .forms import RegForm
+from .forms import RegForm, LoginForm
 from ..models import User
 from .. import db
 
 
-@auth.route('/login')
+@auth.route('/login', methods=['GET', 'POST'])
 def login():
-    return render_template('auth/login.html')
+    return render_template('auth/login.html', loginform=form)
+
+
+@auth.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for("main.index"))
 
 
 @auth.route('/signup', methods=['POST', 'GET'])
