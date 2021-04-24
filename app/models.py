@@ -39,4 +39,4 @@ def __repr__(self):
 
 @login_manager.user_loader
 def user_loader(user_id):
-    return User.query.get(user_id)
+    return User.query.filter(User.id == int(user_id)).first()
