@@ -1,4 +1,6 @@
 from . import db
+
+
 # from werkzeug import generate_password_hash,check_password_hash
 
 
@@ -17,5 +19,18 @@ class User(db.Model):
         db.session.delete(self)
         db.session.commit()
 
-    def __repr__(self):
-        return f'User {self.username}'
+        @property
+        def password(self):
+            raise AttributeError("You can not read the password")
+
+        @password.setter
+        def set_password(self, password):
+            password_hash = generate_password_hash(password)
+            self.password = password_hash
+
+        def verify_password(self, password):
+            return check_password_hash(self.password, password)
+
+
+def __repr__(self):
+    return f'User {self.username}'
