@@ -2,8 +2,8 @@ import os
 
 
 class Config:
-    SQLALCHEMY_DATABASE_URI = os.environ.get('SQLALCHEMY_DATABASE_URI')
-    SQLALCHEMY_TRACK_MODIFICATIONS = True
+    SQLALCHEMY_DATABASE_URI = os.environ.get('SQLALCHEMY_DATABASE_URI', 'postgresql+psycopg2://postgres:postgres@localhost/pitch-app')
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
     SECRET_KEY = os.environ.get('SECRET_KEY')
 
     @staticmethod
