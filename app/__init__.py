@@ -22,8 +22,9 @@ def create_app(config_name):
     app.register_blueprint(authentication_blueprint)
     app.register_blueprint(main_blueprint)
 
+    bootstrap.init_app(app)
     login_manager.init_app(app)
     db.init_app(app)
-    bootstrap.init_app(app)
+
 
     return app
