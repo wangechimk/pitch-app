@@ -9,6 +9,7 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(255), unique=True, nullable=False)
     email = db.Column(db.String(255), unique=True, nullable=False)
     secure_password = db.Column(db.String(255), nullable=False)
+    pitches = db.relationship('Pitch', backref='user', lazy='dynamic')
 
     @classmethod
     def get_comments(cls, pitch_id):
@@ -38,6 +39,19 @@ class User(db.Model, UserMixin):
 
 def __repr__(self):
     return f'User {self.username}'
+
+
+class Pitch(db.Model):
+    __tablename__ = 'pitches'
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(255))
+    post = db.Column(db.Text())
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    category = db.Column(db.String(255), index=True)
+
+    def save_p(self):
+        db.session.add(self)
+        db.session.commit()
 
 
 @login_manager.user_loader
