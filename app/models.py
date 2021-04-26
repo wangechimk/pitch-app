@@ -56,6 +56,17 @@ class Pitch(db.Model):
         db.session.commit()
 
 
+@classmethod
+def get_upvotes(cls, id):
+    upvote = Upvote.query.filter_by(pitch_id=id).all()
+    return upvote
+
+@classmethod
+def get_downvotes(cls,id):
+        downvote = Downvote.query.filter_by(pitch_id=id).all()
+        return downvote
+
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
