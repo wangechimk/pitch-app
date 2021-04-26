@@ -8,7 +8,7 @@ from .. import db
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
-    return render_template('auth/login.html', loginform=form)
+    return render_template('auth/login.html', loginform=LoginForm())
 
 
 @auth.route('/logout')
