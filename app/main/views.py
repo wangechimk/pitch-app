@@ -7,7 +7,7 @@ from .form import PitchForm
 
 @main.route('/')
 def index():
-    pitches = pitch.query.all()
+    pitches = Pitch.query.all()
     job = Pitch.query.filter_by(category='Job').all()
     event = Pitch.query.filter_by(category='Events').all()
     advertisement = Pitch.query.filter_by(category='Advertisement').all()
