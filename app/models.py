@@ -10,6 +10,12 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(255), unique=True, nullable=False)
     secure_password = db.Column(db.String(255), nullable=False)
 
+    @classmethod
+    def get_comments(cls, pitch_id):
+        comments = Comment.query.filter_by(pitch_id=pitch_id).all()
+
+        return comments
+
     def save(self):
         db.session.add(self)
         db.session.commit()
