@@ -55,3 +55,16 @@ def profile(name):
         abort(404)
 
     return render_template("profile/profile.html", user=user)
+
+
+@main.route('/user/<name>/updateProfile', methods=['POST', 'GET'])
+def updateProfile(name):
+    form = UpdateProfile()
+    user = User.query.filter_by(username=name).first()
+    if user is None:
+        abort(404)
+    if form.validate_on_submit():
+        user.bio = form.bio.data
+        user.save()
+        return redirect(url_for('.profile', name=name))
+    return render_template('profile/update.html', form=form)
