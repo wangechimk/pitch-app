@@ -7,9 +7,11 @@ class User(db.Model, UserMixin):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(255), unique=True, nullable=False)
-    email = db.Column(db.String(255), unique=True, index = True)
+    email = db.Column(db.String(255), unique=True, index=True)
     secure_password = db.Column(db.String(255), nullable=False)
     pitches = db.relationship('Pitch', backref='user', lazy='dynamic')
+    bio = db.Column(db.String(255))
+    profile_pic = db.Column(db.String())
 
     @classmethod
     def get_comments(cls, pitch_id):

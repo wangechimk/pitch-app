@@ -1,8 +1,9 @@
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, redirect, url_for, abort, request
 from . import main
 from flask_login import login_required
-from ..models import User,Pitch
-from .form import PitchForm
+from ..models import User, Pitch
+from .form import PitchForm, UpdateProfile
+from .. import db
 
 
 @main.route('/')
@@ -44,3 +45,13 @@ def comment(pitch_id):
     new_comment.save_c()
     return redirect(url_for('.comment', pitch_id=pitch_id))
     return render_template('comment.html', form=form, )
+
+
+@main.route('/user/<name>')
+def profile(name):
+    user = User.query.filter_by(username=name).first()
+
+    if user is None:
+        abort(404)
+
+    return render_template("profile/profile.html", user=user)
