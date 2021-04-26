@@ -11,7 +11,7 @@ class User(db.Model, UserMixin):
     secure_password = db.Column(db.String(255), nullable=False)
     pitches = db.relationship('Pitch', backref='user', lazy='dynamic')
     bio = db.Column(db.String(255))
-    profile_pic = db.Column(db.String())
+    profile_pic_path = db.Column(db.String())
 
     @classmethod
     def get_comments(cls, pitch_id):
@@ -19,7 +19,7 @@ class User(db.Model, UserMixin):
 
         return comments
 
-    def save(self):
+    def save_u(self):
         db.session.add(self)
         db.session.commit()
 
