@@ -12,6 +12,8 @@ class User(db.Model, UserMixin):
     pitches = db.relationship('Pitch', backref='user', lazy='dynamic')
     bio = db.Column(db.String(255))
     profile_pic_path = db.Column(db.String())
+    pitches = db.relationship('Pitch', backref='user', lazy='dynamic')
+    comment = db.relationship('Comment', backref='user', lazy='dynamic')
 
     @classmethod
     def get_comments(cls, pitch_id):
@@ -50,6 +52,7 @@ class Pitch(db.Model):
     post = db.Column(db.Text())
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     category = db.Column(db.String(255), index=True)
+    comment = db.relationship('Comment', backref='pitch', lazy='dynamic')
 
     def save_p(self):
         db.session.add(self)
@@ -61,10 +64,30 @@ def get_upvotes(cls, id):
     upvote = Upvote.query.filter_by(pitch_id=id).all()
     return upvote
 
+
 @classmethod
 def get_downvotes(cls,id):
         downvote = Downvote.query.filter_by(pitch_id=id).all()
         return downvote
+
+
+def __repr__(self):
+    return f'Pitch {self.post}'
+
+
+class Comment(db.Model):
+    __tablename__ = 'comments'
+    id = db.Column(db.Integer, primary_key=True)
+    comment = db.Column(db.Text())
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    pitch_id = db.Column(db.Integer, db.ForeignKey('pitches.id'))
+
+    def save_p(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def __repr__(self):
+        return f'comment:{self.comment}'
 
 
 @login_manager.user_loader

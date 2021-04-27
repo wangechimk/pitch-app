@@ -2,7 +2,7 @@ from flask import Flask, render_template, redirect, url_for, abort, request
 from . import main
 from flask_login import login_required
 from ..models import User, Pitch
-from .form import PitchForm, UpdateProfile
+from .form import PitchForm, UpdateProfile, CommentForm
 from .. import db, photos
 
 
@@ -114,3 +114,14 @@ def dislike(id):
     new_downvote = Downvote(user=current_user, pitch_id=id)
     new_downvote.save()
     return redirect(url_for('main.index', id=id))
+
+
+@main.route('/new_comment/<int:pitch_id>')
+@login_required
+def comment(pitch_id):
+    form = CommentForm()
+    if form.validate_on_submit():
+        comment = form.comment.data
+        post_id = Pitch.query.get(pitch_id)
+        user_id = current_user._get_current_object().id
+        new_comment = ''

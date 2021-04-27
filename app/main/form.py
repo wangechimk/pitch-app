@@ -15,3 +15,8 @@ class PitchForm(FlaskForm):
                            choices=[('Events', 'Events'), ('Job', 'Job'), ('Advertisement', 'Advertisement')],
                            validators=[Required()])
     submit = SubmitField('Post')
+
+
+class CommentForm(FlaskForm):
+    comment = StringField('Leave a comment', validators=[Required()])
+    submit = SubmitField('Comment')
