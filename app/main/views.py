@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, url_for, abort, request
 from . import main
-from flask_login import login_required
+from flask_login import login_required, current_user
 from ..models import User, Pitch, Comment, Upvote,Downvote
 from .form import PitchForm, UpdateProfile, CommentForm, UpvoteForm
 from .. import db, photos
@@ -24,7 +24,11 @@ def new_pitch():
         post = form.post.data
         category = form.category.data
         user_id = current_user
-        new_pitch = Pitch(post=post, user_id=current_user._get_current_object().id, category=category)
+        print(user_id, 'user_id')
+        comment = form.comment.data
+        new_pitch = Pitch(
+            title=title, post=post, user_id=current_user._get_current_object().id, category=category, comment=comment
+        )
         new_pitch.save_p()
         return redirect(url_for('main.index'))
     return render_template('create_pitch.html', form=form)
