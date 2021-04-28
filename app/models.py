@@ -91,6 +91,7 @@ class Upvote(db.Model):
         db.session.add(self)
         db.session.commit()
 
+    @classmethod
     def add_upvotes(cls, id):
         upvote_pitch = Upvote(user=current_user, pitch_id=id)
         upvote_pitch.save()
@@ -98,8 +99,9 @@ class Upvote(db.Model):
     def __repr__(self):
         return f'{self.user_id}:{self.pitch_id}'
 
-    class Downvote(db.Model):
-        __tablename__ = 'downvotes'
+
+class Downvote(db.Model):
+    __tablename__ = 'downvotes'
 
     id = db.Column(db.Integer, primary_key=True)
     downvote = db.Column(db.Integer, default=1)
