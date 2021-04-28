@@ -71,7 +71,7 @@ class Comment(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     pitch_id = db.Column(db.Integer, db.ForeignKey('pitches.id'))
 
-    def save_p(self):
+    def save_c(self):
         db.session.add(self)
         db.session.commit()
 
@@ -110,6 +110,7 @@ class Upvote(db.Model):
         db.session.add(self)
         db.session.commit()
 
+    @classmethod
     def add_downvotes(cls, id):
         downvote_pitch = Downvote(user=current_user, pitch_id=id)
         downvote_pitch.save()

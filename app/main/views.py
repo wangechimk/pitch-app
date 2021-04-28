@@ -25,10 +25,7 @@ def new_pitch():
         category = form.category.data
         user_id = current_user
         print(user_id, 'user_id')
-        comment = form.comment.data
-        new_pitch = Pitch(
-            title=title, post=post, user_id=current_user._get_current_object().id, category=category, comment=comment
-        )
+        new_pitch = Pitch(title=title, post=post, user_id=current_user._get_current_object().id, category=category)
         new_pitch.save_p()
         return redirect(url_for('main.index'))
     return render_template('create_pitch.html', form=form)
@@ -89,7 +86,7 @@ def update_pic(name):
 @main.route('/like/<int:id>', methods=['POST', 'GET'])
 @login_required
 def like(id):
-    get_pitches = Upvote.get_upvotes(id)
+    get_pitches = Pitch.get_upvotes(id)
     valid_string = f'{current_user.id}:{id}'
     for pitch in get_pitches:
         to_str = f'{pitch}'
@@ -106,7 +103,7 @@ def like(id):
 @main.route('/dislike/<int:id>', methods=['POST', 'GET'])
 @login_required
 def dislike(id):
-    pitch = Downvote.get_downvotes(id)
+    pitch = Pitch.get_downvotes(id)
     valid_string = f'{current_user.id}:{id}'
     for p in pitch:
         to_str = f'{p}'
