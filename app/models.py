@@ -18,9 +18,7 @@ class User(db.Model, UserMixin):
 
     @classmethod
     def get_comments(cls, pitch_id):
-        comments = Comment.query.filter_by(pitch_id=pitch_id).all()
-
-        return comments
+        return Comment.query.filter_by(pitch_id=pitch_id).all()
 
     def save_u(self):
         db.session.add(self)
@@ -30,16 +28,16 @@ class User(db.Model, UserMixin):
         db.session.delete(self)
         db.session.commit()
 
-        @property
-        def set_password(self):
-            raise AttributeError('You cannot read the password attribute')
+    @property
+    def password(self):
+        raise AttributeError('You cannot read the password attribute')
 
-        @set_password.setter
-        def password(self, password):
-            self.secure_password = generate_password_hash(password)
+    @password.setter
+    def password(self, password):
+        self.secure_password = generate_password_hash(password)
 
-        def verify_password(self, password):
-            return check_password_hash(self.secure_password, password)
+    def verify_password(self, password):
+        return check_password_hash(self.secure_password, password)
 
 
 def __repr__(self):
