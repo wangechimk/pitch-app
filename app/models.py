@@ -59,9 +59,16 @@ class Pitch(db.Model):
         db.session.add(self)
         db.session.commit()
 
+    @classmethod
+    def get_upvotes(cls, id):
+        return Upvote.query.filter_by(pitch_id=id).all()
 
-def __repr__(self):
-    return f'Pitch {self.post}'
+    @classmethod
+    def get_downvotes(cls, id):
+        return Downvote.query.filter_by(pitch_id=id).all()
+
+    def __repr__(self):
+        return f'Pitch {self.post}'
 
 
 class Comment(db.Model):
