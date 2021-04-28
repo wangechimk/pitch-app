@@ -13,6 +13,7 @@ class User(db.Model, UserMixin):
     bio = db.Column(db.String(255))
     profile_pic_path = db.Column(db.String())
     upvote = db.relationship('Upvote', backref='user', lazy='dynamic')
+    downvote = db.relationship('Downvote', backref='user', lazy='dynamic')
     comment = db.relationship('Comment', backref='user', lazy='dynamic')
 
     @classmethod
@@ -54,6 +55,7 @@ class Pitch(db.Model):
     category = db.Column(db.String(255), index=True)
     comment = db.relationship('Comment', backref='pitch', lazy='dynamic')
     upvote = db.relationship('Upvote', backref='pitch', lazy='dynamic')
+    downvote = db.relationship('Downvote', backref='pitch', lazy='dynamic')
 
     def save_p(self):
         db.session.add(self)
@@ -95,15 +97,24 @@ class Upvote(db.Model):
         upvote_pitch = Upvote(user=current_user, pitch_id=id)
         upvote_pitch.save()
 
-    @classmethod
-    def get_upvotes(cls, id):
-        upvote = Upvote.query.filter_by(pitch_id=id).all()
-        return upvote
+    def __repr__(self):
+        return f'{self.user_id}:{self.pitch_id}'
 
-    @classmethod
-    def all_upvotes(cls, pitch_id):
-        upvotes = Upvote.query.order_by('id').all()
-        return upvotes
+    class Downvote(db.Model):
+        __tablename__ = 'downvotes'
+
+    id = db.Column(db.Integer, primary_key=True)
+    downvote = db.Column(db.Integer, default=1)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    pitch_id = db.Column(db.Integer, db.ForeignKey('pitches.id'))
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def add_downvotes(cls, id):
+        downvote_pitch = Downvote(user=current_user, pitch_id=id)
+        downvote_pitch.save()
 
     def __repr__(self):
         return f'{self.user_id}:{self.pitch_id}'
